@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    {% for post in posts %}
+        <h1> <a href="{% url 'post' post_id=post.id %}"> {{ post.title }} </a> </h1>
+        <div class="date">
+            {{ post.created_at }} by {{ post.author.username }}
+        </div>
+            <a href="{% url 'posts_by_author' author_name=post.author.username %}">{{ post.author.username }}</a>
+        {% for tag in post.tags.all %}
+            <a href="{% url 'posts_by_tag' tag_slug=tag.slug %}">{{ tag.name }}</a>
+        {% endfor %}
+    {% endfor %}
+
+<hr>
+{% include "pagination.html" with page=posts %}
+{% endblock %}
